@@ -1,0 +1,80 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Setup access using Switch Roles between you and Getup Cloud
+Parameters:
+  UseAdminPolicy:
+    Description: >
+      Select Yes, if you want to give Administrator Access to the created role.
+      Select No, if you want to use granular access to the created role.
+    Type: String
+    AllowedValues:
+      - true
+      - false
+  TrustedAccountId:
+    Description: Desired AWS Account ID that you want to give access permissions
+    Type: String
+
+Conditions:
+  CreateAdminRole: !Equals [ !Ref UseAdminPolicy, true ]
+  CreateGranularRole: !Equals [ !Ref UseAdminPolicy, false ]
+
+Resources:
+
+  AdminRole:    
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: getupcloud
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AdministratorAccess
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action:
+              - sts:AssumeRole
+            Effect: Allow
+            Principal:
+              AWS: !Sub arn:aws:iam::${TrustedAccountId}:root
+        Version: '2012-10-17'
+      Path: /
+    Condition: CreateAdminRole
+
+  GranularRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: getupcloud
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AdministratorAccess
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action:
+              - sts:AssumeRole
+            Effect: Allow
+            Principal:
+              AWS: !Sub arn:aws:iam::${TrustedAccountId}:root
+        Version: '2012-10-17'
+      Path: /
+    Condition: CreateGranularRole
+
+  GranularPolicy:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyName: getupcloudGranularAccess
+      Roles:
+        - !Ref GranularRole
+      #
+      # TODO: Write granular JSON policy below matching Getup Engine Installer requirements
+      #
+      #PolicyDocument:
+        #Version: '2012-10-17'
+        #Statement:
+        #  - Action: sts:AssumeRole
+        #    Effect: Allow
+        #    Resource:
+        #      - !Sub fill
+        #  - Action: sts:AssumeRole
+        #    Effect: Allow
+        #    Resource:
+        #      - !Sub permissions
+        #  - Action: sts:AssumeRole
+        #    Effect: Allow
+        #    Resource:
+        #      - !Sub please
+    Condition: CreateGranularRole
