@@ -23,6 +23,14 @@ If you really want to setup through AWS Console, [this](https://docs.aws.amazon.
 - [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html)
 - [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 
+
+### Clone repository
+```sh
+git clone https://github.com/getupcloud/best-practices-access.git
+cd best-practices-access/aws
+```
+
+
 ### Deploy stack
 ```sh
 export STACK_NAME="GetupCloudAccess"
@@ -34,6 +42,7 @@ aws cloudformation deploy \
     --template-file switchrole.yaml \
     --parameter-overrides TrustedAccountId=${TRUSTED_ACCOUNT_ID}
 ```
+
 
 ### Delete stack
 ```sh
