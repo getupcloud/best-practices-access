@@ -38,9 +38,22 @@ export TRUSTED_ACCOUNT_ID="Provided AWS Account ID here"
 
 aws cloudformation deploy \
     --stack-name ${STACK_NAME} \
+    --region us-east-1 \
     --capabilities CAPABILITY_NAMED_IAM \
     --template-file switchrole.yaml \
     --parameter-overrides TrustedAccountId=${TRUSTED_ACCOUNT_ID}
+```
+
+
+### Get stack output
+```sh
+export STACK_NAME="GetupCloudAccess"
+
+aws cloudformation describe-stacks \
+    --stack-name ${STACK_NAME} \
+    --region us-east-1 \
+    --query 'Stacks[0].Outputs' \
+    --output text
 ```
 
 
@@ -48,5 +61,7 @@ aws cloudformation deploy \
 ```sh
 export STACK_NAME="GetupCloudAccess"
 
-aws cloudformation delete-stack --stack-name ${STACK_NAME}
+aws cloudformation delete-stack \
+    --stack-name ${STACK_NAME} \
+    --region us-east-1
 ```

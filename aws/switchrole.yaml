@@ -83,3 +83,11 @@ Resources:
         #    Resource:
         #      - !Sub please
     Condition: CreateGranularRole
+
+Outputs:
+  YourAccountId:
+    Value: !Ref AWS::AccountId
+  TrustedAccountId:
+    Value: !Ref TrustedAccountId
+  RoleArn:
+    Value: !If [CreateAdminRole,!GetAtt AdminRole.Arn,!GetAtt GranularRole.Arn ]
