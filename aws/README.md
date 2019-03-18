@@ -1,6 +1,11 @@
 # [AWS](#aws)
 
-## Strategy
+- [Strategy](README.md#strategy)
+- [Configuration](README.md#configuration)
+- [Cloudformation Template](README.md#cloudformation-template)
+
+
+## [Strategy](#strategy)
 -----
 **Strategy Used:** Switch Role
 
@@ -16,7 +21,7 @@ You can create the role through AWS Console or using the AWS CLI, but we strongl
 If you really want to setup through AWS Console, [this](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-console-create-stack.html) documentation will guide you through the interface step-by-step.
 
 
-## Configuration
+## [Configuration](#configuration)
 -----
 
 ### Prerequisites
@@ -25,6 +30,8 @@ If you really want to setup through AWS Console, [this](https://docs.aws.amazon.
 
 
 ### Clone repository
+Clone the repository and change your current folder:
+
 ```sh
 git clone https://github.com/getupcloud/best-practices-access.git
 cd best-practices-access/aws
@@ -32,9 +39,10 @@ cd best-practices-access/aws
 
 
 ### Deploy stack
+Create/Update the Cloudformation stack:
 ```sh
+export TRUSTED_ACCOUNT_ID="123456789012"
 export STACK_NAME="GetupCloudAccess"
-export TRUSTED_ACCOUNT_ID="Provided AWS Account ID here"
 
 aws cloudformation deploy \
     --stack-name ${STACK_NAME} \
@@ -43,9 +51,12 @@ aws cloudformation deploy \
     --template-file switchrole.yaml \
     --parameter-overrides TrustedAccountId=${TRUSTED_ACCOUNT_ID}
 ```
+- *You can override Cloudformation's template default variables by setting extra parameters ```--parameter-overrides ParamA=ValueA ParamB=ValueB```.*
+- *You'll substitute TRUSTED_ACCOUNT_ID value with the Account ID that we'll send you.*
 
 
 ### Get stack output
+Print the Ouput Variables from the previously created stack:
 ```sh
 export STACK_NAME="GetupCloudAccess"
 
@@ -55,9 +66,11 @@ aws cloudformation describe-stacks \
     --query 'Stacks[0].Outputs' \
     --output text
 ```
+- *You'll send us the stack output, as we need this information to finish the access setup.*
 
 
 ### Delete stack
+Delete the created Cloudformation stack:
 ```sh
 export STACK_NAME="GetupCloudAccess"
 
@@ -65,3 +78,15 @@ aws cloudformation delete-stack \
     --stack-name ${STACK_NAME} \
     --region us-east-1
 ```
+- *WARNING: Deleting the stack will delete any resources created with it (roles & policies), consequently disabling all accesses as well.*
+
+
+## [Cloudformation Template](#cloudformation-template)
+-----
+
+## Parameters
+| Parameter            | Type         | Recommended                | Example            |
+|----------------------|--------------|----------------------------|--------------------|
+| TrustedAccountId     | String       | Our AWS Account ID         | 123456789012       |
+| UseAdminPolicy       | String       | The default value          | true               |
+| RoleName             | String       | The default value          | getupcloud         |
