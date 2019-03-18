@@ -1,6 +1,9 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: Setup access using Switch Roles between you and Getup Cloud
 Parameters:
+  TrustedAccountId:
+    Description: Desired AWS Account ID that you want to give access permissions
+    Type: String
   UseAdminPolicy:
     Description: >
       Select Yes, if you want to give Administrator Access to the created role.
@@ -9,9 +12,11 @@ Parameters:
     AllowedValues:
       - true
       - false
-  TrustedAccountId:
-    Description: Desired AWS Account ID that you want to give access permissions
+    Default: true
+  RoleName:
+    Description: Role name used to Switch Accounts. Default Value is recommended.
     Type: String
+    Default: getupcloud
 
 Conditions:
   CreateAdminRole: !Equals [ !Ref UseAdminPolicy, true ]
@@ -22,7 +27,7 @@ Resources:
   AdminRole:    
     Type: AWS::IAM::Role
     Properties:
-      RoleName: getupcloud
+      RoleName: !Ref RoleName
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/AdministratorAccess
       AssumeRolePolicyDocument:
@@ -39,7 +44,7 @@ Resources:
   GranularRole:
     Type: AWS::IAM::Role
     Properties:
-      RoleName: getupcloud
+      RoleName: !Ref RoleName
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/AdministratorAccess
       AssumeRolePolicyDocument:
