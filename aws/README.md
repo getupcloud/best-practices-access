@@ -41,7 +41,7 @@ cd best-practices-access/aws
 ### Deploy stack
 Create/Update the Cloudformation stack:
 ```sh
-export TRUSTED_ACCOUNT_ID="123456789012"
+export TRUSTED_ACCOUNT_ID="975877104335"
 export STACK_NAME="GetupCloudAccess"
 
 aws cloudformation deploy \
