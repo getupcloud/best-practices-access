@@ -85,8 +85,8 @@ aws cloudformation delete-stack \
 -----
 
 ## Parameters
-| Parameter            | Type         | Recommended                | Example            |
-|----------------------|--------------|----------------------------|--------------------|
-| TrustedAccountId     | String       | Our AWS Account ID         | 123456789012       |
-| UseAdminPolicy       | String       | The default value          | true               |
-| RoleName             | String       | The default value          | getupcloud         |
+| Parameter            | Type         | Recommended                | Example                   |
+|----------------------|--------------|----------------------------|---------------------------|
+| TrustedAccountId     | String       | Our AWS Account ID         | 975877104335 (getupcloud) |
+| UseAdminPolicy       | String       | The default value          | true                      |
+| RoleName             | String       | The default value          | getupcloud                |
