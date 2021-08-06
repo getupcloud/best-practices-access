@@ -89,7 +89,7 @@ aws cloudformation delete-stack \
 
 ## Parameters
 
-Allow access from the US account (Mandatory)
+Allow access from the US account (Mandatory) - https://getup-us.signin.aws.amazon.com/console
 
 | Parameter            | Type         | Recommended                | Example          |
 |----------------------|--------------|----------------------------|------------------|
@@ -97,7 +97,8 @@ Allow access from the US account (Mandatory)
 | UseAdminPolicy       | String       | The default value          | true             |
 | RoleName             | String       | The default value          | getupcloud       |
 
-Allow access from the BR account (Optional)
+
+Allow access from the BR account (Optional) - https://getup-br.signin.aws.amazon.com/console
 
 | Parameter            | Type         | Recommended                | Example          |
 |----------------------|--------------|----------------------------|------------------|
