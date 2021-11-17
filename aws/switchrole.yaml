@@ -13,8 +13,8 @@ Parameters:
       - true
       - false
     Default: true
-  RoleName:
-    Description: Role name used to Switch Accounts. Default Value is recommended.
+  RoleNamePrefix:
+    Description: Role name prefix used to Switch Accounts. Role name will be $RoleNamePrefix-$TrustedAccountId. Default Value is recommended.
     Type: String
     Default: getupcloud
 
@@ -27,7 +27,7 @@ Resources:
   AdminRole:    
     Type: AWS::IAM::Role
     Properties:
-      RoleName: !Ref RoleName
+      RoleName: !Sub ${RoleNamePrefix}-${TrustedAccountId}
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/AdministratorAccess
       AssumeRolePolicyDocument:
@@ -44,7 +44,7 @@ Resources:
   GranularRole:
     Type: AWS::IAM::Role
     Properties:
-      RoleName: !Ref RoleName
+      RoleName: !Sub ${RoleNamePrefix}-${TrustedAccountId}
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/AdministratorAccess
       AssumeRolePolicyDocument:
@@ -85,6 +85,7 @@ Resources:
     Condition: CreateGranularRole
 
 Outputs:
+  RoleName: !Sub ${RoleNamePrefix}-${TrustedAccountId}
   YourAccountId:
     Value: !Ref AWS::AccountId
   TrustedAccountId:
