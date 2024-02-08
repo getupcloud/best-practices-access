@@ -24,12 +24,13 @@ Conditions:
 
 Resources:
 
-  AdminRole:    
+  AdminRole:
     Type: AWS::IAM::Role
     Properties:
       RoleName: !Ref RoleName
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/AdministratorAccess
+      MaxSessionDuration: 43200
       AssumeRolePolicyDocument:
         Statement:
           - Action:
